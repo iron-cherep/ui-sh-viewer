@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.pnpm-store/
+
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+
+/tests/fixtures/
+
+.mcp.json
+.cachebro/
+.claude/
+.codex/
+.agents/
+
+.DS_Store
