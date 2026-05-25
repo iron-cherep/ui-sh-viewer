@@ -1,0 +1,6 @@
+allowBuilds:
+  agent-browser: true
+  esbuild: true
+  msgpackr-extract: false
+minimumReleaseAge: 10080
+engineStrict: true

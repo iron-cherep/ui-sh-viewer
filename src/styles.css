@@ -1,0 +1,190 @@
+@import "@fontsource-variable/inter";
+@import "tailwindcss";
+
+/* Drive Tailwind's `dark:` variant (and Catalyst's) from the `.dark` class
+   rather than the OS preference — this app is dark-only. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Brand accent. Registered as theme colors so utilities (text-accent,
+   bg-accent, ring-accent, accent/NN, …) are generated. The accent is light, so
+   on-accent surfaces use --color-accent-contrast (dark) for text. */
+@theme {
+  --color-accent: oklch(75% 0.22 308);
+  --color-accent-bright: oklch(82% 0.19 308);
+  --color-accent-contrast: oklch(25% 0.08 308);
+}
+
+:root {
+  font-family: "Inter Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01", "ss03";
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  background-color: var(--color-zinc-950);
+  color: var(--color-zinc-100);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Prose — comark renders standard HTML into a `.prose` wrapper. Tuned for the
+   dark surface: a single light heading color, accent links, recessed code wells. */
+.prose {
+  color: var(--color-zinc-300);
+  font-size: var(--text-base);
+  line-height: 1.75;
+}
+
+.prose * + * {
+  margin-top: --spacing(4);
+}
+
+/* The first block sits right under the article header — no leading divider/gap. */
+.prose > :first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: var(--color-zinc-50);
+  font-weight: var(--font-weight-semibold);
+}
+
+.prose h1 {
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.prose h2 {
+  margin-top: --spacing(10);
+  border-top: 1px solid --alpha(var(--color-white) / 10%);
+  padding-top: --spacing(6);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.prose h3 {
+  margin-top: --spacing(8);
+  font-size: var(--text-xl);
+}
+
+.prose h4,
+.prose h5,
+.prose h6 {
+  margin-top: --spacing(6);
+  font-size: var(--text-base);
+}
+
+.prose p {
+  max-width: 86ch;
+  text-wrap: pretty;
+}
+
+.prose a {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-medium);
+  text-decoration-line: underline;
+  text-decoration-color: --alpha(var(--color-accent) / 35%);
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: var(--color-accent-bright);
+}
+
+.prose a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: --spacing(6);
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose li + li {
+  margin-top: --spacing(2);
+}
+
+.prose code {
+  border-radius: var(--radius-sm);
+  background: --alpha(var(--color-white) / 8%);
+  padding: 0.1rem 0.3rem;
+  color: var(--color-zinc-100);
+  font-size: 0.875em;
+}
+
+.prose pre {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  background: var(--color-zinc-900);
+  padding: --spacing(4);
+  color: var(--color-zinc-100);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  outline: 1px solid --alpha(var(--color-white) / 10%);
+  outline-offset: -1px;
+}
+
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+.prose blockquote {
+  border-left: 3px solid --alpha(var(--color-accent) / 40%);
+  padding-left: --spacing(4);
+  color: var(--color-zinc-400);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid --alpha(var(--color-white) / 10%);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.prose th {
+  white-space: nowrap;
+  border-bottom: 1px solid --alpha(var(--color-white) / 14%);
+  padding: --spacing(2) --spacing(3);
+  text-align: left;
+  color: var(--color-zinc-50);
+  font-weight: var(--font-weight-semibold);
+}
+
+.prose td {
+  border-bottom: 1px solid --alpha(var(--color-white) / 8%);
+  padding: --spacing(3);
+  vertical-align: top;
+}
