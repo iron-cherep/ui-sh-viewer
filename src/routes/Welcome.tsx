@@ -1,4 +1,4 @@
-import { ShieldCheck } from "lucide-react";
+import { ExternalLink, ShieldCheck } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useDocs } from "../app/DocsProvider";
@@ -68,9 +68,20 @@ export function Welcome() {
             </p>
 
             <form onSubmit={onSubmit} className="mt-8">
-              <label htmlFor="token" className="text-base/6 font-medium text-white sm:text-sm/6">
-                Access token
-              </label>
+              <div className="flex items-baseline justify-between gap-3">
+                <label htmlFor="token" className="text-base/6 font-medium text-white sm:text-sm/6">
+                  Access token
+                </label>
+                <a
+                  href="https://ui.sh/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-base/6 font-medium text-accent hover:text-accent-bright sm:text-sm/6"
+                >
+                  Get a token
+                  <ExternalLink aria-hidden className="size-3.5" />
+                </a>
+              </div>
               <input
                 id="token"
                 name="token"
