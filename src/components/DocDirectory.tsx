@@ -1,5 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useVersionedNav } from "../app/version-nav";
 import { type DocPage } from "../effect/domain";
 import { getChildDocs, getDocPath, summarizeDoc, uriToPath } from "../lib/docs";
 
@@ -17,6 +18,7 @@ export function DocDirectory({
   items: DocPage[];
   allDocs: DocPage[];
 }) {
+  const { to } = useVersionedNav();
   return (
     <div>
       <header className="border-b border-white/10 pb-5">
@@ -31,7 +33,7 @@ export function DocDirectory({
           return (
             <Link
               key={doc.uri}
-              to={uriToPath(doc.uri)}
+              to={to(uriToPath(doc.uri))}
               className="group rounded-xl bg-zinc-900 p-4 ring-1 ring-white/10 transition hover:bg-zinc-800/60 hover:ring-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               <div className="flex items-start justify-between gap-3">

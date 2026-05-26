@@ -1,11 +1,13 @@
 import { Link as LinkIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useVersionedNav } from "../app/version-nav";
 import { type DocPage } from "../effect/domain";
 import { getDocPath, uriToPath } from "../lib/docs";
 import { Markdown } from "./Markdown";
 
 /** A single document: markdown body plus a sidebar of pages it links to. */
 export function DocArticle({ doc, docs }: { doc: DocPage; docs: Map<string, DocPage> }) {
+  const { to } = useVersionedNav();
   const available = doc.links.filter((link) => docs.has(link.uri));
   const missing = doc.links.filter((link) => !docs.has(link.uri));
   const links = [...available, ...missing];
@@ -40,7 +42,7 @@ export function DocArticle({ doc, docs }: { doc: DocPage; docs: Map<string, DocP
             links.map((link) => (
               <Link
                 key={link.uri}
-                to={uriToPath(link.uri)}
+                to={to(uriToPath(link.uri))}
                 className="group flex items-start gap-2 rounded-lg px-2 py-2 text-zinc-300 transition hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 <LinkIcon className="mt-1 size-4 shrink-0 stroke-accent" />

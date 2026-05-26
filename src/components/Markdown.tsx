@@ -1,6 +1,6 @@
 import { ComarkClient } from "@comark/react";
 import type { MouseEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useVersionedNav } from "../app/version-nav";
 import { uriToPath } from "../lib/docs";
 
 /**
@@ -10,7 +10,7 @@ import { uriToPath } from "../lib/docs";
  * in a new tab.
  */
 export function Markdown({ markdown }: { markdown: string }) {
-  const navigate = useNavigate();
+  const { go } = useVersionedNav();
 
   function handleClick(event: MouseEvent<HTMLDivElement>) {
     const anchor = (event.target as HTMLElement).closest("a");
@@ -19,7 +19,7 @@ export function Markdown({ markdown }: { markdown: string }) {
     const href = anchor.getAttribute("href") ?? "";
     if (href.startsWith("uidotsh://")) {
       event.preventDefault();
-      navigate(uriToPath(href));
+      go(uriToPath(href));
     } else if (/^https?:\/\//i.test(href)) {
       event.preventDefault();
       window.open(href, "_blank", "noopener,noreferrer");

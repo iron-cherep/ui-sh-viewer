@@ -8,7 +8,7 @@ export function DocsIndex() {
   const items = getTopLevelDocs(docList);
 
   if (!items.length) {
-    return <p className="text-sm/6 text-zinc-400">No documents loaded yet. Use &ldquo;Refresh docs&rdquo; to fetch them.</p>;
+    return <p className="text-sm/6 text-zinc-400">No documents loaded yet. Use &ldquo;Fetch latest&rdquo; to fetch them.</p>;
   }
 
   return (

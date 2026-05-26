@@ -1,8 +1,8 @@
 import { FetchHttpClient } from "@effect/platform";
 import { BrowserKeyValueStore } from "@effect/platform-browser";
 import { Layer } from "effect";
-import { DocCache } from "./services/DocCache";
 import { DocCrawler } from "./services/DocCrawler";
+import { DocStore } from "./services/DocStore";
 import { McpClient } from "./services/McpClient";
 import { TokenStore } from "./services/TokenStore";
 
@@ -14,4 +14,4 @@ const McpClientLive = Layer.provide(McpClient.Default, Layer.mergeAll(FetchHttpC
 const DocCrawlerLive = Layer.provide(DocCrawler.Default, McpClientLive);
 
 /** The full application context: every service the UI runs effects against. */
-export const AppLayer = Layer.mergeAll(TokenStoreLive, McpClientLive, DocCrawlerLive, DocCache.Default);
+export const AppLayer = Layer.mergeAll(TokenStoreLive, McpClientLive, DocCrawlerLive, DocStore.Default);

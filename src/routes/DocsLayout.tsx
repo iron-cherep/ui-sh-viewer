@@ -1,7 +1,8 @@
-import { Loader2, Menu, X } from "lucide-react";
+import { AlertTriangle, Loader2, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useDocs } from "../app/DocsProvider";
+import { VersionUrlSync } from "../app/version-nav";
 import { FetchProgressBar, FetchProgressPage } from "../components/FetchProgress";
 import { FrameBox } from "../components/Frame";
 import { Sidebar } from "../components/Sidebar";
@@ -9,21 +10,21 @@ import { pathToUri } from "../lib/docs";
 
 /** Framed app shell: sidebar + scrolling content. Guards access and shows crawl progress. */
 export function DocsLayout() {
-  const { hydrated, hasToken, docs, status, progress, refresh } = useDocs();
+  const { hydrated, hasToken, docs, status, progress, versionNotice, versions, reload } = useDocs();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const autoFetched = useRef(false);
   const activeUri = pathToUri(location.pathname);
 
-  // Have a token but nothing cached yet (e.g. cache cleared) → fetch once.
+  // Have a token but no stored versions yet (first run / history cleared) → fetch once.
   useEffect(() => {
-    if (hydrated && hasToken && docs.size === 0 && status === "idle" && !autoFetched.current) {
+    if (hydrated && hasToken && versions.length === 0 && status === "idle" && !autoFetched.current) {
       autoFetched.current = true;
-      void refresh();
+      void reload();
     }
-    // `refresh` is stable in practice; the ref + status guard prevent re-runs.
+    // `reload` is stable; the ref + status guard prevent re-runs.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hydrated, hasToken, docs.size, status]);
+  }, [hydrated, hasToken, versions.length, status]);
 
   if (!hydrated) {
     return <Splash />;
@@ -36,6 +37,7 @@ export function DocsLayout() {
 
   return (
     <>
+      <VersionUrlSync />
       <FrameBox className="flex">
         <aside className="hidden w-80 shrink-0 flex-col overflow-y-auto border-r border-white/10 px-6 py-6 lg:flex">
           <Sidebar activeUri={activeUri} />
@@ -55,6 +57,13 @@ export function DocsLayout() {
           </header>
 
           {status === "refreshing" && docs.size > 0 ? <FetchProgressBar progress={progress} /> : null}
+
+          {versionNotice ? (
+            <div className="flex items-center gap-2 border-b border-amber-500/20 bg-amber-500/10 px-4 py-2 text-xs/5 text-amber-200 sm:px-6 lg:px-8">
+              <AlertTriangle className="size-4 shrink-0 stroke-amber-300" />
+              <span>{versionNotice}</span>
+            </div>
+          ) : null}
 
           <main className="min-w-0 flex-1 overflow-y-auto">
             {cold ? (

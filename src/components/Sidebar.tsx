@@ -1,17 +1,29 @@
 import clsx from "clsx";
-import { ChevronRight, FileText, Folder, House, LogOut, RefreshCw, Search, type LucideIcon } from "lucide-react";
+import {
+  ChevronRight,
+  Clock,
+  FileText,
+  Folder,
+  House,
+  LogOut,
+  RefreshCw,
+  Search,
+  type LucideIcon,
+} from "lucide-react";
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDocs } from "../app/DocsProvider";
+import { useVersionedNav } from "../app/version-nav";
 import { getChildDocs, getNavigationDocs, uriToPath } from "../lib/docs";
-import { AccentButton } from "./AccentButton";
+import { formatTimestampShort } from "../lib/format";
 
-/** Left navigation: brand, the Refresh button, and a searchable doc list. */
+/** Left navigation: brand, the current version + history, and a searchable doc list. */
 export function Sidebar({ activeUri, onNavigate }: { activeUri: string | null; onNavigate?: () => void }) {
-  const { docList, status, refresh, signOut } = useDocs();
+  const { docList, status, versions, currentVersion, reload, signOut } = useDocs();
+  const { go: navigate, pin, pinVersion } = useVersionedNav();
   const [query, setQuery] = useState("");
-  const navigate = useNavigate();
   const loading = status === "connecting" || status === "refreshing";
+  const latestId = versions[0]?.id ?? null;
+  const pinnedToOlder = pin !== null && currentVersion !== null && currentVersion.id !== latestId;
 
   const items = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -26,6 +38,11 @@ export function Sidebar({ activeUri, onNavigate }: { activeUri: string | null; o
     onNavigate?.();
   }
 
+  async function fetchLatest() {
+    await reload();
+    pinVersion(null, { replace: true });
+  }
+
   return (
     <div className="flex h-full min-h-0 flex-col">
       <div>
@@ -38,10 +55,54 @@ export function Sidebar({ activeUri, onNavigate }: { activeUri: string | null; o
         <p className="mt-1.5 text-xs/5 text-zinc-400">Browse the ui.sh MCP documentation graph</p>
       </div>
 
-      <AccentButton className="mt-6 w-full" disabled={loading} onClick={() => void refresh()}>
-        <RefreshCw className={clsx("size-4", loading && "animate-spin")} />
-        {loading ? "Fetching…" : "Refresh docs"}
-      </AccentButton>
+      <div className="mt-6">
+        <p className="px-2 text-[0.6875rem]/4 font-medium tracking-wide text-zinc-500 uppercase">Current version</p>
+        <div className="mt-0.5 flex items-center gap-2 px-2">
+          <p className="truncate text-sm/6 font-medium tabular-nums text-white">
+            {currentVersion ? formatTimestampShort(currentVersion.savedAt) : "No version yet"}
+          </p>
+          {currentVersion && pinnedToOlder ? (
+            <span className="inline-flex shrink-0 items-center rounded bg-amber-500/10 px-1.5 py-0.5 text-[0.625rem]/4 font-medium text-amber-300 ring-1 ring-amber-500/20">
+              Pinned
+            </span>
+          ) : null}
+          <button
+            type="button"
+            onClick={() => void fetchLatest()}
+            disabled={loading}
+            aria-label="Fetch the latest docs"
+            title="Fetch the latest docs"
+            className="-mr-1 ml-auto inline-flex shrink-0 items-center justify-center rounded-lg p-1.5 text-zinc-500 transition hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-50"
+          >
+            <RefreshCw className={clsx("size-4", loading && "animate-spin")} />
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => go("/versions")}
+          className={clsx(
+            "mt-2 flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left transition focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent",
+            activeUri === "uidotsh://versions"
+              ? "bg-zinc-900 text-white ring-1 ring-white/10"
+              : "text-zinc-300 hover:bg-white/5 hover:text-white",
+          )}
+        >
+          <Clock
+            className={clsx(
+              "size-4 shrink-0",
+              activeUri === "uidotsh://versions" ? "stroke-zinc-200" : "stroke-zinc-500",
+            )}
+          />
+          <span className="flex-1 truncate text-sm/6 font-medium">Version history</span>
+          {versions.length ? (
+            <span className="flex shrink-0 items-center gap-1 text-xs/5 text-zinc-500">
+              <span className="tabular-nums">{versions.length}</span>
+              <ChevronRight className="size-4 stroke-zinc-600" />
+            </span>
+          ) : null}
+        </button>
+      </div>
 
       <div className="mt-6 flex min-h-0 flex-1 flex-col border-t border-white/10 pt-5">
         <label className="relative block">

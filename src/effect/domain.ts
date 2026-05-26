@@ -39,6 +39,22 @@ export type DocPage = {
   error?: string;
 };
 
+/** A stored version is identified by the epoch-millis it was downloaded at. */
+export type VersionId = string;
+
+/** Lightweight metadata about a stored version — cheap to list without its docs. */
+export type VersionMeta = {
+  readonly id: VersionId;
+  /** Epoch millis the crawl was stored (also the numeric source of {@link id}). */
+  readonly savedAt: number;
+  readonly docCount: number;
+};
+
+/** A stored version together with its full document graph. */
+export type DocVersion = VersionMeta & {
+  readonly docs: DocPage[];
+};
+
 /** The bearer token was rejected (401/403). */
 export class TokenInvalidError extends Data.TaggedError("TokenInvalidError")<{}> {}
 
