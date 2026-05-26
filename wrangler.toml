@@ -1,0 +1,7 @@
+# Cloudflare Pages config. Lets `wrangler pages dev` / `wrangler pages deploy`
+# run without flags. The git-integrated Pages build reads its build command and
+# Node version from the dashboard, not from here.
+name = "ui-sh-viewer"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-05-26"
+# The /mcp proxy (functions/mcp.ts) uses only Web APIs — no nodejs_compat needed.
