@@ -51,7 +51,7 @@ export function DocsLayout() {
             >
               <Menu className="size-5" />
             </button>
-            <p className="font-mono text-xs/5 tracking-wide text-accent uppercase">UI.SH MG</p>
+            <p className="font-mono text-xs/5 tracking-wide text-accent uppercase">UI.SH MCP Viewer</p>
           </header>
 
           {status === "refreshing" && docs.size > 0 ? <FetchProgressBar progress={progress} /> : null}

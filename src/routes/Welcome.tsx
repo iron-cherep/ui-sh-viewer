@@ -55,13 +55,13 @@ export function Welcome() {
           >
             <div className="flex items-center gap-2.5">
               <h1 id="welcome-title" className="text-3xl font-semibold tracking-tight text-balance text-white">
-                UI.SH MG
+                UI.SH MCP Viewer
               </h1>
               <span className="inline-flex items-center rounded bg-white/5 px-1.5 py-0.5 text-[0.6875rem]/4 font-medium text-zinc-400 ring-1 ring-white/10">
                 Unofficial
               </span>
             </div>
-            <p className="mt-2 text-base/7 text-zinc-300 sm:text-sm/6">UI.SH&rsquo;s Missing GUI</p>
+            <p className="mt-2 text-base/7 text-zinc-300 sm:text-sm/6">Browse the ui.sh MCP documentation graph</p>
             <p className="mt-3 max-w-[52ch] text-base/7 text-pretty text-zinc-400 sm:text-sm/6">
               A read-only browser for the ui.sh documentation graph, not affiliated with ui.sh. Paste your
               access token to fetch the docs and browse them like a mini site.

@@ -1,4 +1,4 @@
-# ui.sh MCP Viewer — Agent Instructions
+# UI.SH MCP Viewer — Agent Instructions
 
 An open-source, static React SPA for browsing the ui.sh MCP documentation graph from the browser.
 

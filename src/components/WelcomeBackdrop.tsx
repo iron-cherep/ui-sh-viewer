@@ -16,7 +16,7 @@ export function WelcomeBackdrop() {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center gap-3 border-b border-white/10 px-4 py-3 lg:hidden">
-          <p className="font-mono text-xs/5 tracking-wide text-accent uppercase">UI.SH MG</p>
+          <p className="font-mono text-xs/5 tracking-wide text-accent uppercase">UI.SH MCP Viewer</p>
         </header>
         <main className="min-w-0 flex-1 overflow-hidden">
           <div className="px-5 py-6 sm:px-6 lg:px-8">
@@ -44,12 +44,12 @@ function DummySidebar() {
     <div className="flex h-full min-h-0 flex-col">
       <div>
         <div className="flex items-center gap-2">
-          <h1 className="text-xl font-semibold tracking-tight text-white">UI.SH MG</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-white">UI.SH MCP Viewer</h1>
           <span className="inline-flex items-center rounded bg-white/5 px-1.5 py-0.5 text-[0.6875rem]/4 font-medium text-zinc-400 ring-1 ring-white/10">
             Unofficial
           </span>
         </div>
-        <p className="mt-1.5 text-xs/5 text-zinc-400">UI.SH&rsquo;s Missing GUI</p>
+        <p className="mt-1.5 text-xs/5 text-zinc-400">Browse the ui.sh MCP documentation graph</p>
       </div>
 
       <AccentButton className="mt-6 w-full" tabIndex={-1}>

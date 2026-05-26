@@ -1,7 +1,7 @@
-# UI.SH MG
+# UI.SH MCP Viewer
 
-**UI.SH's Missing GUI** — a small, unofficial, open-source, dark-themed SPA for
-browsing the [ui.sh](https://ui.sh) MCP documentation graph from your browser.
+**A read-only viewer for the [ui.sh](https://ui.sh) MCP documentation graph** —
+a small, unofficial, open-source, dark-themed SPA you run from your browser.
 Paste an access token, fetch the docs once, and browse them like a mini
 documentation site. Not affiliated with ui.sh.
 

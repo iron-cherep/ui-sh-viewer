@@ -30,12 +30,12 @@ export function Sidebar({ activeUri, onNavigate }: { activeUri: string | null; o
     <div className="flex h-full min-h-0 flex-col">
       <div>
         <div className="flex items-center gap-2">
-          <h1 className="text-xl font-semibold tracking-tight text-white">UI.SH MG</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-white">UI.SH MCP Viewer</h1>
           <span className="inline-flex items-center rounded bg-white/5 px-1.5 py-0.5 text-[0.6875rem]/4 font-medium text-zinc-400 ring-1 ring-white/10">
             Unofficial
           </span>
         </div>
-        <p className="mt-1.5 text-xs/5 text-zinc-400">UI.SH&rsquo;s Missing GUI</p>
+        <p className="mt-1.5 text-xs/5 text-zinc-400">Browse the ui.sh MCP documentation graph</p>
       </div>
 
       <AccentButton className="mt-6 w-full" disabled={loading} onClick={() => void refresh()}>
