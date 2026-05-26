@@ -111,7 +111,7 @@ const CARDS: { title: string; path: string; description: string; pages?: number 
   {
     title: "Getting Started, Eventually",
     path: "ui/intro",
-    description: "Install, configure, and quietly question your life choices — all in under five minutes. Results may vary.",
+    description: "Install, configure, and quietly question your life choices, all in under five minutes. Results may vary.",
   },
   {
     title: "Hooks, Line & Sinker",
@@ -122,7 +122,7 @@ const CARDS: { title: string; path: string; description: string; pages?: number 
   {
     title: "The Lit Components",
     path: "ui/components",
-    description: "A component library so blazing fast it compiles itself. No cap — just templates and a tasteful amount of magic.",
+    description: "A component library so blazing fast it compiles itself. No cap, just templates and a tasteful amount of magic.",
     pages: 12,
   },
   {
@@ -140,7 +140,7 @@ const CARDS: { title: string; path: string; description: string; pages?: number 
   {
     title: "Recursion (see Recursion)",
     path: "ui/recursion",
-    description: "To understand this page, first read this page. To leave, please consult the base case — sold separately.",
+    description: "To understand this page, first read this page. To leave, please consult the base case (sold separately).",
   },
 ];
 

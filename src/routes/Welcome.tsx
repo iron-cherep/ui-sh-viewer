@@ -63,7 +63,7 @@ export function Welcome() {
             </div>
             <p className="mt-2 text-base/7 text-zinc-300 sm:text-sm/6">UI.SH&rsquo;s Missing GUI</p>
             <p className="mt-3 max-w-[52ch] text-base/7 text-pretty text-zinc-400 sm:text-sm/6">
-              A read-only browser for the ui.sh documentation graph &mdash; not affiliated with ui.sh. Paste your
+              A read-only browser for the ui.sh documentation graph, not affiliated with ui.sh. Paste your
               access token to fetch the docs and browse them like a mini site.
             </p>
 
@@ -98,7 +98,7 @@ export function Welcome() {
               <ShieldCheck className="mt-0.5 size-5 shrink-0 stroke-accent" />
               <p className="text-base/6 text-zinc-400 sm:text-sm/6">
                 Everything stays on this device. Your token is saved in your browser&rsquo;s local storage and sent
-                only to the official ui.sh API to fetch documentation &mdash; no other servers are contacted, and
+                only to the official ui.sh API to fetch documentation. No other servers are contacted, and
                 nothing is uploaded, shared, or tracked.
               </p>
             </div>
