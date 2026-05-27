@@ -14,7 +14,14 @@ export function DocsLayout() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const autoFetched = useRef(false);
+  const mainRef = useRef<HTMLElement>(null);
   const activeUri = pathToUri(location.pathname);
+
+  // Scroll content back to the top whenever the route changes (e.g. a sidebar
+  // nav click) — the content scrolls inside <main>, not the window.
+  useEffect(() => {
+    mainRef.current?.scrollTo({ top: 0 });
+  }, [location.pathname]);
 
   // Have a token but no stored versions yet (first run / history cleared) → fetch once.
   useEffect(() => {
@@ -65,7 +72,7 @@ export function DocsLayout() {
             </div>
           ) : null}
 
-          <main className="min-w-0 flex-1 overflow-y-auto">
+          <main ref={mainRef} className="min-w-0 flex-1 overflow-y-auto">
             {cold ? (
               <FetchProgressPage progress={progress} />
             ) : (
