@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en" class="antialiased">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UI.SH MCP Viewer · share cards</title>
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['InterVariable', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+            colors: {
+              accent: 'oklch(75% 0.22 308)',
+              'accent-bright': 'oklch(82% 0.19 308)',
+              'accent-contrast': 'oklch(25% 0.08 308)',
+              ink: '#f4f4f5',
+              bg: '#09090b',
+              card: '#18181b',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root {
+        --accent: oklch(75% 0.22 308);
+        --accent-contrast: oklch(25% 0.08 308);
+        --ink: #f4f4f5;
+        --bg: #09090b;
+        --card: #18181b;
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01', 'ss03';
+        font-optical-sizing: auto;
+      }
+      .num { font-variant-numeric: tabular-nums; }
+
+      .card {
+        position: relative;
+        background: var(--card);
+        color: var(--ink);
+        overflow: hidden;
+      }
+      .card-1200x630  { width: 1200px; height: 630px; }
+      .card-1080x1080 { width: 1080px; height: 1080px; }
+      .card-1080x1350 { width: 1080px; height: 1350px; }
+      .card-1080x1920 { width: 1080px; height: 1920px; }
+
+      /* Faint 40px graph-paper grid. */
+      .corner-grid {
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      /* Soft accent glow bleeding in from a corner. */
+      .glow::before,
+      .glow::after {
+        content: '';
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(80px);
+        pointer-events: none;
+      }
+      .glow::before {
+        top: -120px; right: -120px; width: 380px; height: 380px;
+        background: oklch(75% 0.22 308 / 0.22);
+      }
+      .glow::after {
+        bottom: -140px; left: -100px; width: 320px; height: 320px;
+        background: oklch(75% 0.22 308 / 0.12);
+      }
+
+      .toolbar {
+        position: sticky; top: 0; z-index: 50;
+        background: rgba(9, 9, 11, 0.85);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .anchor-pill {
+        font-size: 0.75rem; font-weight: 600; letter-spacing: -0.01em;
+        padding: 0.45rem 0.85rem; border-radius: 9999px;
+        color: rgb(161 161 170);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      }
+      .anchor-pill:hover { color: var(--accent-contrast); background: var(--accent); border-color: var(--accent); }
+
+      .size-tag {
+        font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        color: rgb(113 113 122);
+      }
+
+      @media print { .toolbar, .size-tag-row { display: none !important; } }
+    </style>
+  </head>
+  <body class="font-sans" style="background: #050506; color: var(--ink);">
+    <div class="toolbar">
+      <div class="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-3 px-6 py-3">
+        <div class="flex items-center gap-3 text-sm font-medium tracking-tight text-zinc-400">
+          <span class="inline-block size-2 rounded-full bg-accent"></span>
+          <span>Share cards · UI.SH MCP Viewer</span>
+          <span class="text-zinc-700 max-sm:hidden">/</span>
+          <span class="text-zinc-500 max-sm:hidden">screenshot each card at native size</span>
+        </div>
+        <nav class="flex flex-wrap items-center gap-2">
+          <a href="#card-og" class="anchor-pill num">1200 × 630</a>
+          <a href="#card-square" class="anchor-pill num">1080 × 1080</a>
+          <a href="#card-portrait" class="anchor-pill num">1080 × 1350</a>
+          <a href="#card-story" class="anchor-pill num">1080 × 1920</a>
+        </nav>
+      </div>
+      <div class="mx-auto max-w-[1280px] px-6 pb-3 text-xs text-zinc-500">
+        Tip: right-click a card → <span class="font-semibold text-zinc-300">Inspect</span> → in DevTools press
+        <span class="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[11px] text-zinc-300">⌘⇧P</span>
+        and run <span class="font-semibold text-zinc-300">“Capture node screenshot”</span> to export at exact pixels.
+      </div>
+    </div>
+
+    <main class="mx-auto flex max-w-[1280px] flex-col items-center gap-12 px-6 py-12">
+
+      <!-- Open Graph · 1200 × 630 — wide split -->
+      <section id="card-og" class="size-tag-row flex flex-col items-center gap-3">
+        <div class="flex items-baseline gap-3">
+          <span class="size-tag">Open Graph · link preview</span>
+          <span class="size-tag num text-zinc-600">1200 × 630</span>
+        </div>
+
+        <div class="card card-1200x630 corner-grid glow ring-1 ring-white/10">
+          <div class="relative flex h-full">
+            <div class="flex w-[640px] flex-col justify-between p-14">
+              <div>
+                <p class="text-sm font-semibold tracking-tight text-accent">Unofficial · open-source viewer</p>
+                <h1 class="mt-5 text-6xl font-semibold leading-[1.02] tracking-tight text-balance text-white">
+                  Browse the ui.sh<br />
+                  <span class="text-accent italic">MCP docs graph.</span>
+                </h1>
+                <p class="mt-5 max-w-[42ch] text-lg leading-[1.45] text-pretty text-zinc-400">
+                  Paste a token, read the docs like a mini-site — entirely on your device.
+                </p>
+              </div>
+              <div class="flex items-center gap-2 text-sm font-semibold tracking-tight text-zinc-400">
+                <span class="inline-block size-2 rounded-full bg-accent"></span>
+                <span>ui-sh-viewer</span>
+              </div>
+            </div>
+
+            <div class="relative flex flex-1 flex-col justify-between border-l border-white/10 p-12">
+              <svg viewBox="0 0 200 200" fill="none" class="size-44 self-end" aria-hidden="true">
+                <line x1="96" y1="104" x2="40" y2="56" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                <line x1="96" y1="104" x2="118" y2="30" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                <line x1="96" y1="104" x2="168" y2="78" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                <line x1="96" y1="104" x2="150" y2="158" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                <line x1="96" y1="104" x2="34" y2="150" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                <line x1="40" y1="56" x2="118" y2="30" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                <line x1="168" y1="78" x2="150" y2="158" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                <circle cx="40" cy="56" r="7" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+                <circle cx="118" cy="30" r="5" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+                <circle cx="168" cy="78" r="6" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+                <circle cx="150" cy="158" r="6" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+                <circle cx="34" cy="150" r="5" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+                <circle cx="96" cy="104" r="12" fill="oklch(75% 0.22 308)" />
+              </svg>
+
+              <div class="grid grid-cols-3 gap-px overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10">
+                <div class="bg-card px-6 py-5">
+                  <div class="text-base font-semibold tracking-tight text-zinc-100">On-device</div>
+                  <div class="mt-1 text-sm text-zinc-500">Stored in your browser</div>
+                </div>
+                <div class="bg-card px-6 py-5">
+                  <div class="text-base font-semibold tracking-tight text-zinc-100">Open source</div>
+                  <div class="mt-1 text-sm text-zinc-500">Static React SPA</div>
+                </div>
+                <div class="bg-card px-6 py-5">
+                  <div class="text-base font-semibold tracking-tight text-zinc-100">Stateless proxy</div>
+                  <div class="mt-1 text-sm text-zinc-500">Forwards to ui.sh, stores nothing</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Instagram · 1080 × 1080 — square -->
+      <section id="card-square" class="size-tag-row flex flex-col items-center gap-3">
+        <div class="flex items-baseline gap-3">
+          <span class="size-tag">Instagram · square</span>
+          <span class="size-tag num text-zinc-600">1080 × 1080</span>
+        </div>
+
+        <div class="card card-1080x1080 corner-grid glow ring-1 ring-white/10">
+          <div class="relative flex h-full flex-col p-16">
+            <div class="flex items-center justify-between">
+              <p class="text-base font-semibold tracking-tight text-accent">Unofficial · open-source viewer</p>
+              <div class="flex items-center gap-2 text-base font-semibold tracking-tight text-zinc-400">
+                <span class="inline-block size-2 rounded-full bg-accent"></span>
+                <span>ui-sh-viewer</span>
+              </div>
+            </div>
+
+            <svg viewBox="0 0 200 200" fill="none" class="mt-12 size-40" aria-hidden="true">
+              <line x1="96" y1="104" x2="40" y2="56" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="118" y2="30" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="168" y2="78" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="150" y2="158" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="34" y2="150" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="40" y1="56" x2="118" y2="30" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="168" y1="78" x2="150" y2="158" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <circle cx="40" cy="56" r="7" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="118" cy="30" r="5" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="168" cy="78" r="6" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="150" cy="158" r="6" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="34" cy="150" r="5" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="96" cy="104" r="12" fill="oklch(75% 0.22 308)" />
+            </svg>
+
+            <h1 class="mt-10 text-8xl font-semibold leading-[1.02] tracking-tight text-balance text-white">
+              Browse the<br />
+              <span class="text-accent italic">docs graph.</span>
+            </h1>
+            <p class="mt-6 max-w-[28ch] text-2xl leading-[1.4] text-pretty text-zinc-400">
+              The ui.sh MCP docs, browsable on your device.
+            </p>
+
+            <div class="mt-auto grid grid-cols-3 gap-px overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10">
+              <div class="bg-card px-6 py-5">
+                <div class="text-lg font-semibold tracking-tight text-zinc-100">On-device</div>
+                <div class="mt-1 text-sm text-zinc-500">Stored in your browser</div>
+              </div>
+              <div class="bg-card px-6 py-5">
+                <div class="text-lg font-semibold tracking-tight text-zinc-100">Open source</div>
+                <div class="mt-1 text-sm text-zinc-500">Static React SPA</div>
+              </div>
+              <div class="bg-card px-6 py-5">
+                <div class="text-lg font-semibold tracking-tight text-zinc-100">Stateless proxy</div>
+                <div class="mt-1 text-sm text-zinc-500">Forwards to ui.sh, stores nothing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Instagram · 1080 × 1350 — portrait 4:5 -->
+      <section id="card-portrait" class="size-tag-row flex flex-col items-center gap-3">
+        <div class="flex items-baseline gap-3">
+          <span class="size-tag">Instagram · portrait 4:5</span>
+          <span class="size-tag num text-zinc-600">1080 × 1350</span>
+        </div>
+
+        <div class="card card-1080x1350 corner-grid glow ring-1 ring-white/10">
+          <div class="relative flex h-full flex-col p-16">
+            <div class="flex items-center justify-between">
+              <p class="text-base font-semibold tracking-tight text-accent">Unofficial · open-source viewer</p>
+              <div class="flex items-center gap-2 text-base font-semibold tracking-tight text-zinc-400">
+                <span class="inline-block size-2 rounded-full bg-accent"></span>
+                <span>ui-sh-viewer</span>
+              </div>
+            </div>
+
+            <h1 class="mt-14 text-8xl font-semibold leading-[1.04] tracking-tight text-balance text-white">
+              Browse the<br />
+              ui.sh<br />
+              <span class="text-accent italic">docs graph.</span>
+            </h1>
+            <p class="mt-8 max-w-[30ch] text-2xl leading-[1.4] text-pretty text-zinc-400">
+              Paste a token. Read the docs like a mini-site — no servers, nothing uploaded.
+            </p>
+
+            <svg viewBox="0 0 200 200" fill="none" class="mt-auto size-64 self-center" aria-hidden="true">
+              <line x1="96" y1="104" x2="40" y2="56" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="118" y2="30" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="168" y2="78" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="150" y2="158" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="34" y2="150" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="40" y1="56" x2="118" y2="30" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="168" y1="78" x2="150" y2="158" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <circle cx="40" cy="56" r="7" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="118" cy="30" r="5" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="168" cy="78" r="6" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="150" cy="158" r="6" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="34" cy="150" r="5" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="96" cy="104" r="12" fill="oklch(75% 0.22 308)" />
+            </svg>
+
+            <div class="mt-auto grid grid-cols-3 gap-px overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10">
+              <div class="bg-card px-6 py-5">
+                <div class="text-lg font-semibold tracking-tight text-zinc-100">On-device</div>
+                <div class="mt-1 text-sm text-zinc-500">Stored in your browser</div>
+              </div>
+              <div class="bg-card px-6 py-5">
+                <div class="text-lg font-semibold tracking-tight text-zinc-100">Open source</div>
+                <div class="mt-1 text-sm text-zinc-500">Static React SPA</div>
+              </div>
+              <div class="bg-card px-6 py-5">
+                <div class="text-lg font-semibold tracking-tight text-zinc-100">Stateless proxy</div>
+                <div class="mt-1 text-sm text-zinc-500">Forwards to ui.sh, stores nothing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Story · 1080 × 1920 — 9:16 -->
+      <section id="card-story" class="size-tag-row flex flex-col items-center gap-3">
+        <div class="flex items-baseline gap-3">
+          <span class="size-tag">Story · 9:16</span>
+          <span class="size-tag num text-zinc-600">1080 × 1920</span>
+        </div>
+
+        <div class="card card-1080x1920 corner-grid glow ring-1 ring-white/10">
+          <div class="relative flex h-full flex-col p-16">
+            <div class="flex items-center justify-between">
+              <p class="text-base font-semibold tracking-tight text-accent">Unofficial viewer</p>
+              <div class="flex items-center gap-2 text-base font-semibold tracking-tight text-zinc-400">
+                <span class="inline-block size-2 rounded-full bg-accent"></span>
+                <span>ui-sh-viewer</span>
+              </div>
+            </div>
+
+            <div class="mt-24">
+              <p class="text-base font-semibold tracking-tight text-zinc-500">Open-source · on-device</p>
+              <h1 class="mt-6 text-9xl font-semibold leading-[1.04] tracking-tight text-balance text-white">
+                Browse<br />
+                the ui.sh<br />
+                <span class="text-accent italic">docs graph.</span>
+              </h1>
+            </div>
+
+            <svg viewBox="0 0 200 200" fill="none" class="mt-20 size-72 self-center" aria-hidden="true">
+              <line x1="96" y1="104" x2="40" y2="56" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="118" y2="30" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="168" y2="78" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="150" y2="158" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="96" y1="104" x2="34" y2="150" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="40" y1="56" x2="118" y2="30" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <line x1="168" y1="78" x2="150" y2="158" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <circle cx="40" cy="56" r="7" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="118" cy="30" r="5" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="168" cy="78" r="6" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="150" cy="158" r="6" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="34" cy="150" r="5" fill="#18181b" stroke="oklch(75% 0.22 308 / 0.6)" stroke-width="2" />
+              <circle cx="96" cy="104" r="12" fill="oklch(75% 0.22 308)" />
+            </svg>
+
+            <div class="mt-auto grid grid-cols-3 gap-px overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10">
+              <div class="bg-card px-6 py-5">
+                <div class="text-lg font-semibold tracking-tight text-zinc-100">On-device</div>
+                <div class="mt-1 text-sm text-zinc-500">Stored in your browser</div>
+              </div>
+              <div class="bg-card px-6 py-5">
+                <div class="text-lg font-semibold tracking-tight text-zinc-100">Open source</div>
+                <div class="mt-1 text-sm text-zinc-500">Static React SPA</div>
+              </div>
+              <div class="bg-card px-6 py-5">
+                <div class="text-lg font-semibold tracking-tight text-zinc-100">Stateless proxy</div>
+                <div class="mt-1 text-sm text-zinc-500">Forwards to ui.sh, stores nothing</div>
+              </div>
+            </div>
+
+            <div class="mt-8 flex items-center justify-between text-base">
+              <span class="font-medium tracking-tight text-zinc-500">Tap link in bio →</span>
+              <span class="font-semibold tracking-tight text-accent">ui-sh-viewer</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
