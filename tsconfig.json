@@ -18,5 +18,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src", "vite.config.ts"],
-  "exclude": ["src/catalyst/catalyst-ui-kit/demo"]
+  "exclude": ["src/catalyst-ui-kit"]
 }

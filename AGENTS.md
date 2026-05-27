@@ -13,4 +13,4 @@ This project vendors external repositories under @repos/
 
 When writing Effect code, inspect @repos/effect/ for examples of idiomatic usage, tests, module structure, and API design. Treat it as the source of truth for Effect patterns.
 
-The Catalyst UI kit vendored under `src/catalyst/` follows the same rule: import and compose its components, but do not modify the kit files.
+A subset of the Catalyst UI kit is vendored under `src/catalyst/` — only the components this app actually imports. These are third-party files under the commercial Tailwind Plus license (NOT MIT); import and compose them, but do not modify them, and never redistribute them on their own (see `src/catalyst/NOTICE.md`). The complete kit is kept locally at `src/catalyst-ui-kit/` (git-ignored) as read-only reference only.

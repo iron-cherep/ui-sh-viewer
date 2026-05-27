@@ -8,6 +8,10 @@ vite.config.d.ts
 
 /tests/fixtures/
 
+# Full Catalyst UI kit — local reference only. Commercial Tailwind Plus license,
+# not redistributable. Only the used components are vendored under src/catalyst/.
+/src/catalyst-ui-kit/
+
 .mcp.json
 .cachebro/
 .claude/

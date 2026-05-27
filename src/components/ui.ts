@@ -1,6 +1,7 @@
-// Barrel for the Catalyst components this app uses. Catalyst itself lives under
-// src/catalyst and is treated as read-only vendored code — see AGENTS.md.
-export { Button } from "../catalyst/catalyst-ui-kit/typescript/button";
+// Barrel for the Catalyst components this app uses. They are vendored under
+// src/catalyst/ as third-party code under the Tailwind Plus license — NOT MIT,
+// and not redistributable on their own. See src/catalyst/NOTICE.md.
+export { Button } from "../catalyst/button";
 export {
   Description,
   ErrorMessage,
@@ -8,9 +9,9 @@ export {
   FieldGroup,
   Fieldset,
   Label,
-} from "../catalyst/catalyst-ui-kit/typescript/fieldset";
-export { Input } from "../catalyst/catalyst-ui-kit/typescript/input";
-export { Heading, Subheading } from "../catalyst/catalyst-ui-kit/typescript/heading";
-export { Code, Strong, Text } from "../catalyst/catalyst-ui-kit/typescript/text";
-export { Divider } from "../catalyst/catalyst-ui-kit/typescript/divider";
-export { Badge } from "../catalyst/catalyst-ui-kit/typescript/badge";
+} from "../catalyst/fieldset";
+export { Input } from "../catalyst/input";
+export { Heading, Subheading } from "../catalyst/heading";
+export { Code, Strong, Text } from "../catalyst/text";
+export { Divider } from "../catalyst/divider";
+export { Badge } from "../catalyst/badge";
