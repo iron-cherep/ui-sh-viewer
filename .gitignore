@@ -2,6 +2,10 @@ node_modules/
 dist/
 .pnpm-store/
 
+# Tauri (Rust) build artifacts and generated schemas. Cargo.lock is committed.
+tauri/target/
+tauri/gen/
+
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts

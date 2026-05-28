@@ -1,3 +1,4 @@
+import { listen } from "@tauri-apps/api/event";
 import { Effect, Option } from "effect";
 import {
   createContext,
@@ -15,6 +16,7 @@ import { DocStore } from "../effect/services/DocStore";
 import { McpClient } from "../effect/services/McpClient";
 import { TokenStore } from "../effect/services/TokenStore";
 import { toDocPage } from "../lib/docs";
+import { isTauri } from "../lib/platform";
 import { latestOf, resolveVersion } from "../lib/versions";
 import { runtime } from "./runtime";
 
@@ -285,6 +287,17 @@ export function DocsProvider({ children }: { children: ReactNode }) {
     setVersionNotice(null);
     setProgress(null);
   }, [applyVersions]);
+
+  // In the desktop app, "Log Out" lives in the menu bar (File > Log Out, see
+  // tauri/src/lib.rs), which emits this event. The web build keeps its sidebar
+  // button instead, so this listener is native-only.
+  useEffect(() => {
+    if (!isTauri) return;
+    const unlisten = listen("menu:logout", () => signOut());
+    return () => {
+      void unlisten.then((un) => un());
+    };
+  }, [signOut]);
 
   const value: DocsContextValue = {
     hydrated,

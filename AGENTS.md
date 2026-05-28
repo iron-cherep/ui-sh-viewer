@@ -1,6 +1,13 @@
 # UI.SH MCP Viewer — Agent Instructions
 
-An open-source, static React SPA for browsing the ui.sh MCP documentation graph from the browser.
+An open-source, static React SPA for browsing the ui.sh MCP documentation graph from the browser. It also ships as a self-contained Tauri desktop app.
+
+## Targets
+
+The app runs in two shells from one codebase, selected at runtime via `src/lib/platform.ts` (`isTauri`):
+
+- **Web** (Cloudflare Pages / Vite dev): MCP calls go to the same-origin `/mcp` path, proxied to `https://ui.sh` by `functions/mcp.ts` (prod) or the Vite proxy (dev) to dodge CORS.
+- **Desktop** (Tauri, in `tauri/`): MCP calls go to `https://ui.sh` directly. The HTTP runs in Rust via `tauri-plugin-http` (injected into Effect's `FetchHttpClient` in `src/effect/layers.ts`), so there's no CORS and no proxy. HTTP is scoped to `https://ui.sh/*` in `tauri/capabilities/default.json`. Note the project folder is `tauri/`, not the conventional `src-tauri/` — the CLI finds it by locating `tauri.conf.json`. Building/running needs the Rust toolchain (`pnpm tauri dev` / `pnpm tauri build`).
 
 ## Vendored Repositories
 

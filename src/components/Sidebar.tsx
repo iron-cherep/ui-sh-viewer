@@ -13,8 +13,10 @@ import {
 import { useMemo, useState } from "react";
 import { useDocs } from "../app/DocsProvider";
 import { useVersionedNav } from "../app/version-nav";
+import { APP_NAME, APP_TAGLINE } from "../lib/copy";
 import { getChildDocs, getNavigationDocs, uriToPath } from "../lib/docs";
 import { formatTimestampShort } from "../lib/format";
+import { isTauri } from "../lib/platform";
 
 /** Left navigation: brand, the current version + history, and a searchable doc list. */
 export function Sidebar({ activeUri, onNavigate }: { activeUri: string | null; onNavigate?: () => void }) {
@@ -47,12 +49,12 @@ export function Sidebar({ activeUri, onNavigate }: { activeUri: string | null; o
     <div className="flex h-full min-h-0 flex-col">
       <div>
         <div className="flex items-center gap-2">
-          <h1 className="text-xl font-semibold tracking-tight text-white">UI.SH MCP Viewer</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-white">{APP_NAME}</h1>
           <span className="inline-flex items-center rounded bg-white/5 px-1.5 py-0.5 text-[0.6875rem]/4 font-medium text-zinc-400 ring-1 ring-white/10">
             Unofficial
           </span>
         </div>
-        <p className="mt-1.5 text-xs/5 text-zinc-400">Browse the ui.sh MCP documentation graph</p>
+        <p className="mt-1.5 text-xs/5 text-zinc-400">{APP_TAGLINE}</p>
       </div>
 
       <div className="mt-6">
@@ -140,16 +142,20 @@ export function Sidebar({ activeUri, onNavigate }: { activeUri: string | null; o
         </nav>
       </div>
 
-      <div className="mt-5 border-t border-white/10 pt-4">
-        <button
-          type="button"
-          onClick={signOut}
-          className="inline-flex items-center gap-2 rounded-lg px-2 py-1.5 text-xs/5 text-zinc-500 transition hover:text-zinc-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        >
-          <LogOut className="size-3.5" />
-          Logout
-        </button>
-      </div>
+      {/* Native app moves logout into the menu bar (File > Log Out); web keeps
+          this button. */}
+      {!isTauri ? (
+        <div className="mt-5 border-t border-white/10 pt-4">
+          <button
+            type="button"
+            onClick={signOut}
+            className="inline-flex items-center gap-2 rounded-lg px-2 py-1.5 text-xs/5 text-zinc-500 transition hover:text-zinc-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            <LogOut className="size-3.5" />
+            Logout
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }

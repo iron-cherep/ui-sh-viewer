@@ -35,6 +35,31 @@ textarea {
   font: inherit;
 }
 
+/* Native (Tauri) shell — make the chrome behave like an app, not a web page.
+   Enabled by the `is-tauri` class set on <html> in main.tsx. */
+.is-tauri {
+  /* Kill the rubber-band overscroll that reveals the window background. */
+  overscroll-behavior: none;
+  /* Treat the app chrome (sidebar, headers, buttons) as native widgets that
+     aren't text you select. Reading/editing surfaces opt back in below. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.is-tauri main,
+.is-tauri aside {
+  overscroll-behavior: none;
+}
+
+/* Re-enable selection where reading or editing text is the point. */
+.is-tauri .prose,
+.is-tauri input,
+.is-tauri textarea,
+.is-tauri [data-selectable] {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 /* Prose — comark renders standard HTML into a `.prose` wrapper. Tuned for the
    dark surface: a single light heading color, accent links, recessed code wells. */
 .prose {

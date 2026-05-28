@@ -1,0 +1,31 @@
+[package]
+name = "ui-sh-viewer"
+version = "0.0.0"
+description = "UI.SH MCP Viewer — desktop app"
+authors = ["iron-cherep"]
+edition = "2021"
+
+# The Tauri CLI looks up the project by finding tauri.conf.json, so this crate
+# living in `tauri/` (rather than the conventional `src-tauri/`) is fine.
+
+[lib]
+# The desktop entry point lives in the library so the same `run()` can be reused
+# by mobile targets later. `_lib` suffix avoids clashing with the binary name.
+name = "ui_sh_viewer_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-http = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

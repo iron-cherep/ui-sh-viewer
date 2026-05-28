@@ -1,11 +1,13 @@
 import { Data } from "effect";
+import { isTauri } from "../lib/platform";
 
 /**
- * Same-origin MCP endpoint. In dev, Vite proxies this to https://ui.sh/mcp.
- * For a static deployment the host must proxy /mcp or allow CORS for the
- * Authorization, Content-Type, and MCP-Protocol-Version headers.
+ * The MCP endpoint. In the Tauri desktop app we hit ui.sh directly — the
+ * request is made from Rust (see {@link McpClient}'s HTTP layer), so there's no
+ * CORS and no proxy. In the web build this is a same-origin path that Vite (dev)
+ * or the Cloudflare Pages function (prod) proxies to https://ui.sh/mcp.
  */
-export const MCP_ENDPOINT = "/mcp?agent=codex";
+export const MCP_ENDPOINT = isTauri ? "https://ui.sh/mcp?agent=codex" : "/mcp?agent=codex";
 export const PROTOCOL_VERSION = "2025-03-26";
 export const ROOT_DOC_URI = "uidotsh://ui";
 export const MAX_CRAWLED_DOCS = 140;

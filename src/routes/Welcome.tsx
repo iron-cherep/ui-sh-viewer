@@ -6,6 +6,7 @@ import { AccentButton } from "../components/AccentButton";
 import { FetchProgressPage } from "../components/FetchProgress";
 import { FrameBox } from "../components/Frame";
 import { WelcomeBackdrop } from "../components/WelcomeBackdrop";
+import { APP_NAME, APP_TAGLINE, PRIVACY_NOTE, WELCOME_INTRO } from "../lib/copy";
 
 /** Onboarding: explain the tool, take a token, then crawl with live progress. */
 export function Welcome() {
@@ -55,17 +56,14 @@ export function Welcome() {
           >
             <div className="flex items-center gap-2.5">
               <h1 id="welcome-title" className="text-3xl font-semibold tracking-tight text-balance text-white">
-                UI.SH MCP Viewer
+                {APP_NAME}
               </h1>
               <span className="inline-flex items-center rounded bg-white/5 px-1.5 py-0.5 text-[0.6875rem]/4 font-medium text-zinc-400 ring-1 ring-white/10">
                 Unofficial
               </span>
             </div>
-            <p className="mt-2 text-base/7 text-zinc-300 sm:text-sm/6">Browse the ui.sh MCP documentation graph</p>
-            <p className="mt-3 max-w-[52ch] text-base/7 text-pretty text-zinc-400 sm:text-sm/6">
-              A read-only browser for the ui.sh documentation graph, not affiliated with ui.sh. Paste your
-              access token to fetch the docs and browse them like a mini site.
-            </p>
+            <p className="mt-2 text-base/7 text-zinc-300 sm:text-sm/6">{APP_TAGLINE}</p>
+            <p className="mt-3 max-w-[52ch] text-base/7 text-pretty text-zinc-400 sm:text-sm/6">{WELCOME_INTRO}</p>
 
             <form onSubmit={onSubmit} className="mt-8">
               <div className="flex items-baseline justify-between gap-3">
@@ -107,11 +105,7 @@ export function Welcome() {
 
             <div className="mt-8 flex items-start gap-3 rounded-xl bg-zinc-950/50 p-4 inset-ring inset-ring-white/10">
               <ShieldCheck className="mt-0.5 size-5 shrink-0 stroke-accent" />
-              <p className="text-base/6 text-zinc-400 sm:text-sm/6">
-                Everything stays on this device. Your token is saved in your browser&rsquo;s local storage and sent
-                only to the official ui.sh API to fetch documentation. No other servers are contacted, and
-                nothing is uploaded, shared, or tracked.
-              </p>
+              <p className="text-base/6 text-zinc-400 sm:text-sm/6">{PRIVACY_NOTE}</p>
             </div>
           </div>
         </div>

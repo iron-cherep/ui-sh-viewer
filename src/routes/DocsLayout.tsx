@@ -6,6 +6,7 @@ import { VersionUrlSync } from "../app/version-nav";
 import { FetchProgressBar, FetchProgressPage } from "../components/FetchProgress";
 import { FrameBox } from "../components/Frame";
 import { Sidebar } from "../components/Sidebar";
+import { APP_NAME } from "../lib/copy";
 import { pathToUri } from "../lib/docs";
 
 /** Framed app shell: sidebar + scrolling content. Guards access and shows crawl progress. */
@@ -60,7 +61,7 @@ export function DocsLayout() {
             >
               <Menu className="size-5" />
             </button>
-            <p className="font-mono text-xs/5 tracking-wide text-accent uppercase">UI.SH MCP Viewer</p>
+            <p className="font-mono text-xs/5 tracking-wide text-accent uppercase">{APP_NAME}</p>
           </header>
 
           {status === "refreshing" && docs.size > 0 ? <FetchProgressBar progress={progress} /> : null}
